@@ -1,0 +1,110 @@
+[
+  {
+    "id": "trail01",
+    "name": "Table Rock Trail",
+    "location": "Boise, ID",
+    "distance": 3.7,
+    "difficulty": "Moderate",
+    "description": "A popular trail with great views of the city.",
+    "image": "../images/tablerock.jpg"
+  },
+  {
+    "id": "trail02",
+    "name": "Alice Lake Trail",
+    "location": "Stanley, ID",
+    "distance": 11.2,
+    "difficulty": "Hard",
+    "description": "A stunning alpine hike in the Sawtooth Wilderness leading to a pristine lake.",
+    "image": "../images/alicelake.jpg"
+  },
+  {
+    "id": "trail03",
+    "name": "Goldbug Hot Springs",
+    "location": "Salmon, ID",
+    "distance": 4.0,
+    "difficulty": "Moderate",
+    "description": "A rewarding hike leading to natural geothermal pools with mountain views.",
+    "image": "../images/goldbug.jpg"
+  },
+  {
+    "id": "trail04",
+    "name": "Tubbs Hill",
+    "location": "Coeur d'Alene, ID",
+    "distance": 2.2,
+    "difficulty": "Easy",
+    "description": "A scenic loop trail hugging the edge of Lake Coeur d'Alene.",
+    "image": "../images/tubbshill.jpg"
+  },
+  {
+    "id": "trail05",
+    "name": "Mount Borah Trail",
+    "location": "Mackay, ID",
+    "distance": 8.2,
+    "difficulty": "Hard",
+    "description": "A challenging scramble to the highest peak in Idaho, featuring Chicken Out Ridge.",
+    "image": "../images/borah.jpg"
+  },
+  {
+    "id": "trail06",
+    "name": "Cress Creek Nature Trail",
+    "location": "Ririe, ID",
+    "distance": 1.2,
+    "difficulty": "Easy",
+    "description": "A paved interpretive trail offering beautiful views of the South Fork of the Snake River.",
+    "image": "../images/cresscreek.jpg"
+  },
+  {
+    "id": "trail07",
+    "name": "Scotchman Peak",
+    "location": "Clark Fork, ID",
+    "distance": 8.0,
+    "difficulty": "Hard",
+    "description": "A steep climb rewarded with panoramic views of Lake Pend Oreille and frequent mountain goat sightings.",
+    "image": "../images/scotchman.jpg"
+  },
+  {
+    "id": "trail08",
+    "name": "Fishhook Creek Trail",
+    "location": "Stanley, ID",
+    "distance": 4.5,
+    "difficulty": "Easy",
+    "description": "A relatively flat trail leading to a beautiful meadow with views of the Sawtooth Mountains.",
+    "image": "../images/fishhook.jpg"
+  },
+  {
+    "id": "trail09",
+    "name": "Hulls Gulch Nature Trail",
+    "location": "Boise, ID",
+    "distance": 6.3,
+    "difficulty": "Moderate",
+    "description": "A beautiful hike through the Boise foothills featuring seasonal creeks and wildflowers.",
+    "image": "../images/hullsgulch.jpg"
+  },
+  {
+    "id": "trail10",
+    "name": "Darby Wind Cave",
+    "location": "Driggs, ID",
+    "distance": 5.2,
+    "difficulty": "Moderate",
+    "description": "A scenic hike into the Jedediah Smith Wilderness leading to a fascinating limestone cave.",
+    "image": "../images/darbycave.jpg"
+  },
+  {
+    "id": "trail11",
+    "name": "Pioneer Cabin Trail",
+    "location": "Ketchum, ID",
+    "distance": 8.5,
+    "difficulty": "Hard",
+    "description": "A strenuous climb to a historic ski cabin offering breathtaking views of the Pioneer Mountains.",
+    "image": "../images/pioneercabin.jpg"
+  },
+  {
+    "id": "trail12",
+    "name": "Craters of the Moon North Crater Flow",
+    "location": "Arco, ID",
+    "distance": 0.3,
+    "difficulty": "Easy",
+    "description": "A short walk through fascinating basalt lava flows and craters.",
+    "image": "../images/northcrater.jpg"
+  }
+]

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "trail01",
+    "name": "Table Rock Trail",
+    "location": "Boise, ID",
+    "distance": 3.7,
+    "difficulty": "Moderate",
+    "description": "A popular trail with great views of the city.",
+    "image": "../images/tablerock.jpg"
+  },
+  {
+    "id": "trail02",
+    "name": "Alice Lake Trail",
+    "location": "Stanley, ID",
+    "distance": 11.2,
+    "difficulty": "Hard",
+    "description": "A stunning alpine hike in the Sawtooth Wilderness leading to a pristine lake.",
+    "image": "../images/alicelake.jpg"
+  }
+]

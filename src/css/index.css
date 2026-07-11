@@ -1,0 +1,291 @@
+/* topo contour texture */
+.topo-bg{
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 340px;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0.16;
+  z-index: 0;
+}
+.topo-bg svg{ width: 100%; height: 100%; }
+
+.hero{
+  position: relative;
+  z-index: 1;
+  padding: 36px 24px 26px;
+  text-align: center;
+}
+.hero h1{
+  font-family: 'Oswald', sans-serif;
+  font-size: 44px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--forest);
+  line-height: 0.95;
+}
+.hero h1 span{ color: var(--blaze); }
+.hero p{
+  margin-top: 8px;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: #5a5644;
+  text-transform: uppercase;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.trail-divider{
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 24px;
+  margin: 8px 0 22px;
+  color: var(--forest-2);
+}
+.trail-divider .dash-line{
+  flex: 1;
+  height: 0;
+  border-top: 2px dashed var(--line);
+}
+.trail-divider svg{ width: 18px; height: 18px; flex-shrink: 0; }
+
+/* plan your hike form */
+.card{
+  position: relative;
+  z-index: 1;
+  margin: 0 20px 30px;
+  padding: 22px 20px 24px;
+}
+.card-title{ margin-bottom: 4px; }
+.card-title h2{ font-size: 20px; }
+.card p.form-intro{
+  font-size: 12.5px;
+  color: #6b6650;
+  margin-bottom: 16px;
+}
+
+.form-field{ margin-bottom: 14px; }
+.form-field label{
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--forest-2);
+  margin-bottom: 5px;
+}
+.form-field input,
+.form-field select,
+.form-field textarea{
+  width: 100%;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  border-radius: 3px;
+  padding: 10px 11px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13.5px;
+  color: var(--ink);
+}
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus{
+  outline: 2px solid var(--blaze);
+  outline-offset: 1px;
+  background: #fff;
+}
+.form-field textarea{ resize: vertical; min-height: 64px; }
+
+.btn-blaze{
+  width: 100%;
+  margin-top: 4px;
+  padding: 12px;
+  background: var(--blaze);
+  color: #fff8ee;
+  border: none;
+  border-radius: 3px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.btn-blaze:hover, .btn-blaze:focus-visible{ background: var(--blaze-dark); }
+.btn-blaze:focus-visible{ outline: 2px solid var(--forest); outline-offset: 2px; }
+
+/* explore / filter */
+.explore-header{
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  margin-bottom: 14px;
+}
+.explore-header h2{
+  font-family: 'Oswald', sans-serif;
+  font-size: 20px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--forest);
+}
+.filter-select{
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--line);
+  background: #fbf8ef;
+  border-radius: 3px;
+  padding: 7px 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--forest-2);
+}
+.filter-select select{
+  border: none;
+  background: transparent;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--forest-2);
+}
+.filter-select svg{ width: 13px; height: 13px; }
+
+/* trail list */
+.trail-list{
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 26px;
+}
+.trail-card{
+  position: relative;
+  display: flex;
+  gap: 12px;
+  background: #fbf8ef;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 12px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.trail-card:hover{
+  transform: translateY(-2px);
+  box-shadow: 3px 4px 0 rgba(31,61,44,0.12);
+}
+.trail-card:focus-visible{
+  outline: 2px solid var(--blaze);
+  outline-offset: 2px;
+}
+.trail-thumbnail{
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  border-radius: 3px;
+  background: repeating-linear-gradient(135deg, var(--paper-2) 0 6px, #e9dfc4 6px 12px);
+  border: 1px solid var(--line);
+}
+.trail-info{ flex: 1; min-width: 0; }
+.trail-info .trail-card-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 6px;
+}
+.trail-info h3{
+  font-family: 'Oswald', sans-serif;
+  font-size: 15px;
+  letter-spacing: 0.01em;
+  color: var(--forest);
+  text-transform: uppercase;
+}
+.star-btn svg{ width: 17px; height: 17px; }
+
+.location{
+  font-size: 11.5px;
+  margin-top: 2px;
+}
+.location svg{ width: 11px; height: 11px; }
+
+.trail-meta{
+  display: flex;
+  gap: 14px;
+  margin-top: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+}
+.trail-meta .trail-difficulty{
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--forest-2);
+}
+.trail-meta .trail-distance{
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--blaze-dark);
+}
+.difficulty-dot{ width: 6px; height: 6px; }
+
+/* desktop / tablet expansion */
+@media (min-width: 800px){
+
+  .topo-bg{ height: 400px; }
+
+  .hero{ padding: 56px 24px 34px; }
+  .hero h1{ font-size: 64px; }
+  .hero p{ font-size: 14px; }
+
+  .trail-divider{
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .card{
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 28px 28px 30px;
+  }
+
+  .explore-header{
+    max-width: none;
+    width: 100%;
+    padding: 0 25px;
+  }
+
+  .trail-list{
+    width: 100%;
+    align-self: stretch;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 25px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .trail-card{
+    padding: 10px;
+    min-height: 110px;
+    align-items: center;
+  }
+
+  .trail-card .trail-thumbnail{
+    width: 84px;
+    height: 84px;
+  }
+}
+
+@media (min-width: 1100px){
+  .trail-list{
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

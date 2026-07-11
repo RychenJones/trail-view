@@ -1,0 +1,229 @@
+/* trail-summary uses display:contents so its children (title-row, location,
+   photo-frame, stat-strip) reorder directly within body's mobile flex flow */
+.trail-summary{ display: contents; }
+.title-row{ order: 2; }
+.location{ order: 3; }
+.photo-frame{ order: 4; }
+.stat-strip{ order: 5; }
+.card{ order: 6; }
+footer{ order: 7; }
+
+.back-button{
+  display: inline-flex;
+  align-self: flex-start;
+  padding: 20px 20px 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  color: var(--forest-2);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.back-button:hover{ color: var(--blaze-dark); }
+.back-button:focus-visible{ outline: 2px solid var(--blaze); outline-offset: 2px; }
+
+.title-row{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 0 20px 4px;
+}
+.title-row h1{
+  font-family: 'Oswald', sans-serif;
+  font-size: 26px;
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--forest);
+}
+.location{
+  margin: 0 20px 18px;
+  font-size: 12px;
+}
+.location svg{ width: 12px; height: 12px; }
+
+.star-btn{
+  padding: 2px;
+  margin-top: 4px;
+}
+.star-btn svg{ width: 26px; height: 26px; }
+
+
+/* hero image */
+.photo-frame{
+  width: 90%;
+  margin: 0 auto 20px;
+  aspect-ratio: 1;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: #fbf8ef;
+  padding: 10px;
+  box-shadow: 4px 4px 0 rgba(31,61,44,0.08);
+  display: flex;
+  flex-direction: column;
+}
+.photo{
+  width: 100%;
+  height: auto;
+  flex: 1;
+  min-height: 0;
+  border-radius: 3px;
+  border: 1px dashed var(--line);
+  background: repeating-linear-gradient(135deg, var(--paper-2) 0 10px, #e9dfc4 10px 20px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: #8a8265;
+}
+.photo svg{ width: 34px; height: 34px; }
+.photo span{
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* stat strip */
+.stat-strip{
+  display: flex;
+  margin: 0 20px 22px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  overflow: hidden;
+  background: #fbf8ef;
+}
+.stat{
+  flex: 1;
+  padding: 12px 10px;
+  text-align: center;
+}
+.stat + .stat{ border-left: 1px solid var(--line); }
+.stat .label{
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--forest-2);
+  margin-bottom: 4px;
+}
+.stat .value{
+  font-family: 'Oswald', sans-serif;
+  font-size: 15px;
+  text-transform: uppercase;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.difficulty-dot{ width: 7px; height: 7px; }
+.stat .value.trail-distance{ color: var(--blaze-dark); }
+
+/* description card */
+.card{
+  margin: 0 20px 22px;
+  padding: 20px;
+}
+.card-title{ margin-bottom: 10px; }
+.card-title h2{ font-size: 18px; }
+.card p{
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #4b4736;
+}
+
+/* tablet and desktop layout */
+@media (min-width: 800px){
+
+  body{
+    display: grid;
+    grid-template-columns: minmax(32px, 1fr) minmax(0, 3fr) 45px minmax(0, 3fr) minmax(32px, 1fr);
+    grid-template-areas:
+      "header header header header header"
+      "back   back   back   back    back"
+      ".      photo  .      summary ."
+      ".      desc   desc   desc    ."
+      "footer footer footer footer  footer";
+    grid-template-rows: auto auto auto 1fr auto;
+    column-gap: 0;
+    row-gap: 8px;
+  }
+
+  header{ grid-area: header; }
+
+  .back-button{
+    grid-area: back;
+    padding: 20px 32px 15px;
+  }
+
+  .photo-frame{
+    grid-area: photo;
+    width: 100%;
+    margin: 0;
+    align-self: start;
+  }
+
+  .trail-summary{
+    grid-area: summary;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-self: start;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+  }
+
+  .title-row{ padding: 0 0 4px; }
+  .location{ margin: 0 0 18px; }
+  .stat-strip{
+    max-width: none;
+    margin: 0;
+    flex-direction: column;
+  }
+  .stat + .stat{
+    border-top: 1px solid var(--line);
+    border-left: none;
+  }
+
+  .card{
+    grid-area: desc;
+    margin: 0;
+    align-self: start;
+  }
+
+  footer{ grid-area: footer; }
+}
+
+@media (min-width: 1100px){
+
+  body{
+    grid-template-columns: minmax(40px, 1fr) 450px 45px minmax(0, 450px) minmax(40px, 1fr);
+  }
+
+  header, footer, .back-button{
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  .trail-summary,
+  .stat-strip{ max-width: 450px; }
+
+  .photo-frame,
+  .trail-summary{
+    width: 90%;
+    justify-self: center;
+  }
+
+  .photo-frame{ max-width: 450px; }
+
+  .card{
+    width: calc(100% - 45px);
+    max-width: 900px;
+    justify-self: center;
+  }
+}

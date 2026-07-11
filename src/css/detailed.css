@@ -69,7 +69,6 @@ footer{ order: 7; }
   flex: 1;
   min-height: 0;
   border-radius: 3px;
-  border: 1px dashed var(--line);
   background: repeating-linear-gradient(135deg, var(--paper-2) 0 10px, #e9dfc4 10px 20px);
   display: flex;
   flex-direction: column;

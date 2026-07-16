@@ -1,3 +1,5 @@
+import { isFavorite } from './favorites.js';
+
 export function renderTrails(trails, container) {
   if (!container) return;
   
@@ -8,13 +10,15 @@ export function renderTrails(trails, container) {
     const diffClass = trail.difficulty.toLowerCase();
     
     const cardHTML = `
-      <a class="trail-card" href="/detailed-view.html?id=${encodeURIComponent(trail.id)}&name=${encodeURIComponent(trail.name)}&description=${encodeURIComponent(trail.description)}&image=${encodeURIComponent(trail.image)}&location=${encodeURIComponent(trail.location)}&difficulty=${encodeURIComponent(trail.difficulty)}&distance=${encodeURIComponent(trail.distance)}" title="${trail.description}">
-        <div class="trail-thumbnail" aria-hidden="true" style="background-image: url('${trail.image}'); background-size: cover; background-position: center;"></div>
+      <a class="trail-card" href="/detailed-view.html?id=${encodeURIComponent(trail.id)}" title="${trail.description}">
+        <div class="trail-thumbnail">
+          <img src="${trail.image}" alt="${trail.name}">
+        </div>
         <div class="trail-info">
           <div class="trail-card-header">
             <h3>${trail.name}</h3>
-            <button type="button" class="star-btn" aria-label="Add to favorites" data-id="${trail.id}">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01z"/></svg>
+            <button type="button" class="star-btn ${isFavorite(trail.id) ? 'is-fav' : ''}" aria-label="Add to favorites" data-id="${trail.id}">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01z"/></svg>
             </button>
           </div>
           <div class="location">
@@ -56,7 +60,7 @@ export function renderDetailedView(trail, trailSummary, photoFrame, card) {
   trailSummary.innerHTML = `
     <div class="title-row">
       <h1>${trail.name}</h1>
-      <button type="button" class="star-btn" aria-label="Add to favorites" data-id="${trail.id}">
+      <button type="button" class="star-btn ${isFavorite(trail.id) ? 'is-fav' : ''}" aria-label="Add to favorites" data-id="${trail.id}">
         <svg viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01z"/>
         </svg>

@@ -188,14 +188,24 @@ main{
   outline: 2px solid var(--blaze);
   outline-offset: 2px;
 }
+
 .trail-thumbnail{
   width: 64px;
   height: 64px;
   flex-shrink: 0;
   border-radius: 3px;
+  overflow: hidden;
   background: repeating-linear-gradient(135deg, var(--paper-2) 0 6px, #e9dfc4 6px 12px);
   border: 1px solid var(--line);
 }
+
+.trail-thumbnail img{
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
 .trail-info{ flex: 1; min-width: 0; }
 .trail-info .trail-card-header{
   display: flex;

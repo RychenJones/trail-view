@@ -1,6 +1,3 @@
-// render.js
-
-// Replaces the stock cards with dynamic data
 export function renderTrails(trails, container) {
   if (!container) return;
   

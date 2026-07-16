@@ -1,12 +1,13 @@
+main{ display: flex; flex-direction: column; }
+
 /* trail-summary uses display:contents so its children (title-row, location,
-   photo-frame, stat-strip) reorder directly within body's mobile flex flow */
+   photo-frame, stat-strip) reorder directly within main's mobile flex flow */
 .trail-summary{ display: contents; }
 .title-row{ order: 2; }
 .location{ order: 3; }
 .photo-frame{ order: 4; }
 .stat-strip{ order: 5; }
 .card{ order: 6; }
-footer{ order: 7; }
 
 .back-button{
   display: inline-flex;
@@ -140,19 +141,28 @@ footer{ order: 7; }
 
   body{
     display: grid;
-    grid-template-columns: minmax(32px, 1fr) minmax(0, 3fr) 45px minmax(0, 3fr) minmax(32px, 1fr);
     grid-template-areas:
-      "header header header header header"
-      "back   back   back   back    back"
-      ".      photo  .      summary ."
-      ".      desc   desc   desc    ."
-      "footer footer footer footer  footer";
-    grid-template-rows: auto auto auto 1fr auto;
-    column-gap: 0;
+      "header"
+      "main"
+      "footer";
+    grid-template-rows: auto 1fr auto;
     row-gap: 8px;
   }
 
   header{ grid-area: header; }
+
+  main{
+    grid-area: main;
+    display: grid;
+    grid-template-columns: minmax(32px, 1fr) minmax(0, 3fr) 45px minmax(0, 3fr) minmax(32px, 1fr);
+    grid-template-areas:
+      "back   back   back   back    back"
+      ".      photo  .      summary ."
+      ".      desc   desc   desc    .";
+    grid-template-rows: auto auto 1fr;
+    column-gap: 0;
+    row-gap: 8px;
+  }
 
   .back-button{
     grid-area: back;
@@ -200,7 +210,7 @@ footer{ order: 7; }
 
 @media (min-width: 1100px){
 
-  body{
+  main{
     grid-template-columns: minmax(40px, 1fr) 450px 45px minmax(0, 450px) minmax(40px, 1fr);
   }
 

@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Rychen Jones">
+<meta name="description" content="A class project to explore hikes in the USA and make a plan to go">
 <title>TrailView — Plan Your Hike</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"/>
 <link rel="stylesheet" href="src/css/style.css">
@@ -36,62 +38,103 @@
     </nav>
   </header>
 
-  <section class="hero">
-    <h1>Trail<span>View</span></h1>
-    <p>Find it. Hike it. Log it.</p>
-  </section>
+  <main>
 
-  <div class="trail-divider" aria-hidden="true">
-    <div class="dash-line"></div>
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20l6-14 3 7 2-4 7 11z"/></svg>
-    <div class="dash-line"></div>
-  </div>
+    <section class="hero">
+      <h1>Trail<span>View</span></h1>
+      <p>Find it. Hike it. Log it.</p>
+    </section>
 
-  <form class="card" aria-labelledby="plan-hike-title">
-    <div class="card-title">
-      <h2 id="plan-hike-title">Plan Your Hike</h2>
-    </div>
-    <p class="form-intro">Tell us where you're headed and we'll keep your route on file.</p>
-
-    <div class="form-field">
-      <label for="name">Name</label>
-      <input id="name" type="text" placeholder="Jordan Rivers" autocomplete="name">
-    </div>
-    <div class="form-field">
-      <label for="email">Email</label>
-      <input id="email" type="email" placeholder="jordan@example.com" autocomplete="email">
-    </div>
-    <div class="form-field">
-      <label for="trail">Trail</label>
-      <select id="trail">
-        <!-- Dynamically loaded -->
-      </select>
-    </div>
-    <div class="form-field">
-      <label for="notes">Notes</label>
-      <textarea id="notes" placeholder="Starting time, group size, gear notes…"></textarea>
+    <div class="trail-divider" aria-hidden="true">
+      <div class="dash-line"></div>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20l6-14 3 7 2-4 7 11z"/></svg>
+      <div class="dash-line"></div>
     </div>
 
-    <button type="submit" class="btn-blaze">Save My Hike Plan</button>
-  </form>
+    <form class="card" aria-labelledby="plan-hike-title">
+      <div class="card-title">
+        <h2 id="plan-hike-title">Plan Your Hike</h2>
+      </div>
 
-  <div class="explore-header">
-    <h2>Explore</h2>
-    <div class="filter-select">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
-      <select aria-label="Filter trails">
-        <option>Filter</option>
-        <option>Favorites</option>
-        <option>Easy</option>
-        <option>Moderate</option>
-        <option>Hard</option>
-      </select>
+      <p class="form-intro">
+        Tell us where you're headed and we'll keep your route on file.
+      </p>
+
+      <div class="form-field">
+        <label for="name">Name</label>
+        <input 
+          id="name" 
+          name="name"
+          type="text" 
+          placeholder="Jordan Rivers" 
+          autocomplete="name"
+          maxlength="99"
+          required
+        >
+      </div>
+
+      <div class="form-field">
+        <label for="email">Email</label>
+        <input 
+          id="email" 
+          name="email"
+          type="email" 
+          placeholder="jordan@example.com" 
+          autocomplete="email"
+          required
+        >
+      </div>
+
+      <div class="form-field">
+        <label for="trail">Trail</label>
+        <select 
+          id="trail"
+          name="trail"
+          required
+        >
+          <!-- Dynamically loaded -->
+        </select>
+      </div>
+
+      <div class="form-field">
+        <label for="notes">Notes (optional)</label>
+        <textarea 
+          id="notes"
+          name="notes"
+          placeholder="Starting time, group size, gear notes…"
+          maxlength="499"
+        ></textarea>
+      </div>
+
+      <button type="submit" class="btn-blaze">
+        Save My Hike Plan
+      </button>
+    </form>
+
+    <div class="explore-header">
+      <h2>Explore</h2>
+      <div class="filter-select">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 6h16M7 12h10M10 18h4"/>
+        </svg>
+
+        <select id="filter-trails" aria-label="Filter trails">
+          <option value="all">Filter</option>
+          <option value="favorites">Favorites</option>
+          <option value="easy">Easy</option>
+          <option value="moderate">Moderate</option>
+          <option value="hard">Hard</option>
+        </select>
+      </div>
     </div>
-  </div>
 
-  <div class="trail-list">
-    <!-- Dynamically loaded -->
-  </div>
+    <div class="trail-list">
+      <p id="placeholder-text">No trails to show at this time.</p>
+      <!-- Dynamically loaded -->
+    </div>
+
+  </main>
+
   <footer>© 2026 TrailView. All rights reserved.</footer>
 </body>
 </html>

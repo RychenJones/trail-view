@@ -220,7 +220,11 @@ main{
   color: var(--forest);
   text-transform: uppercase;
 }
-.star-btn svg{ width: 17px; height: 17px; }
+.star-btn svg{
+  width: 45px; 
+  height: 45px; 
+  padding-right: 15px;
+}
 
 .location{
   font-size: 11.5px;

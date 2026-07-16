@@ -8,9 +8,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const trailSummary = document.querySelector(".trail-summary");
     const photoFrame = document.querySelector(".photo-frame");
     const card = document.querySelector(".card");
-
-    console.log("loaded");
-
+    
     const params = new URLSearchParams(window.location.search);
     const id = params.get("id");
 
@@ -27,7 +25,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         const trail = trailData.find(trail => String(trail.id) === id);
 
         if (trail) {
-            console.log(trail);
             renderDetailedView(trail, trailSummary, photoFrame, card);
         } else {
             card.innerHTML = "<p>Trail information not found.</p>";

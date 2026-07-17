@@ -9,49 +9,48 @@ export function renderTrails(trails, container) {
   trails.forEach(trail => {
     const diffClass = trail.difficulty.toLowerCase();
     const cardHTML = `
-      <a class="trail-card"
-        href="detailed-view.html?id=${encodeURIComponent(trail.id)}"
-        title="${trail.description}"
-        aria-label="View details for ${trail.name}">
-        <div class="trail-thumbnail">
-          <img src="${trail.image}" alt="${trail.alt}">
-        </div>
-        <div class="trail-info">
-          <div class="trail-card-header">
-            <h3>${trail.name}</h3>
-            <button
-              type="button"
-              class="star-btn ${isFavorite(trail.id) ? 'is-fav' : ''}"
-              aria-label="${isFavorite(trail.id) ? 'Remove from favorites' : 'Add to favorites'}"
-              aria-pressed="${isFavorite(trail.id)}"
-              data-id="${trail.id}">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01z"/>
+      <article class="trail-card" data-id="${trail.id}">
+        <a class="trail-card-link"
+          href="detailed-view.html?id=${encodeURIComponent(trail.id)}"
+          title="${trail.description}"
+          aria-label="View details for ${trail.name}">
+          <div class="trail-thumbnail">
+            <img src="${trail.image}" alt="${trail.alt}">
+          </div>
+          <div class="trail-info">
+            <div class="trail-card-header">
+              <h3>${trail.name}</h3>
+            </div>
+
+            <div class="location">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
+                <path d="M12 21s-7-6.2-7-11a7 7 0 1114 0c0 4.8-7 11-7 11z"/>
+                <circle cx="12" cy="10" r="2.5"/>
               </svg>
-            </button>
-          </div>
+              ${trail.location}
+            </div>
 
-          <div class="location">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-              <path d="M12 21s-7-6.2-7-11a7 7 0 1114 0c0 4.8-7 11-7 11z"/>
-              <circle cx="12" cy="10" r="2.5"/>
-            </svg>
-            ${trail.location}
+            <div class="trail-meta" aria-label="Trail information">
+              <span class="trail-difficulty">
+                <span class="difficulty-dot ${diffClass}" aria-hidden="true"></span>
+                ${trail.difficulty}
+              </span>
+              <span class="trail-distance">${trail.distance} mi</span>
+            </div>
           </div>
-
-          <div class="trail-meta" aria-label="Trail information">
-            <span class="trail-difficulty">
-              <span class="difficulty-dot ${diffClass}" aria-hidden="true"></span>
-              ${trail.difficulty}
-            </span>
-            <span class="trail-distance">${trail.distance} mi</span>
-          </div>
-        </div>
-      </a>
+        </a>
+        <button
+          type="button"
+          class="star-btn ${isFavorite(trail.id) ? 'is-fav' : ''}"
+          aria-label="${isFavorite(trail.id) ? 'Remove from favorites' : 'Add to favorites'}"
+          aria-pressed="${isFavorite(trail.id)}"
+          data-id="${trail.id}">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01z"/>
+          </svg>
+        </button>
+      </article>
     `;
-
-
-
 
     container.insertAdjacentHTML('beforeend', cardHTML);
   });
@@ -62,7 +61,7 @@ export function renderDropdown(trails, dropdownElement) {
   if (!dropdownElement) return;
   
   // Clear stock options, but keep the placeholder
-  dropdownElement.innerHTML = '<option disabled selected>Select a trail…</option>';
+  dropdownElement.innerHTML = '<option value="" selected disabled>Select a trail…</option>';
   
   trails.forEach(trail => {
     const optionHTML = `<option value="${trail.id}">${trail.name}</option>`;

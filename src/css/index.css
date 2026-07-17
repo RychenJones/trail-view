@@ -134,11 +134,42 @@ main{
 }
 .form-errors p{ margin-bottom: 4px; }
 .form-errors p:last-child{ margin-bottom: 0; }
+.field-error{
+  margin-top: 6px;
+  color: var(--blaze);
+  font-size: 11px;
+  min-height: 0;
+  line-height: 1.3;
+}
+.form-input-invalid,
+.form-field input[aria-invalid="true"],
+.form-field select[aria-invalid="true"],
+.form-field textarea[aria-invalid="true"]{
+  border-color: var(--blaze);
+  box-shadow: 0 0 0 1px rgba(217, 88, 31, 0.2);
+}
+.form-success{
+  margin-bottom: 14px;
+  padding: 10px 12px;
+  border: 1px solid #4f7d55;
+  border-left: 4px solid #4f7d55;
+  background: #eef8ee;
+  color: var(--forest);
+  border-radius: 3px;
+}
 .status-message{
   color: var(--forest-2);
   font-family: 'JetBrains Mono', monospace;
   font-size: 12px;
   padding: 10px 0;
+}
+.status-message-error{
+  color: var(--blaze);
+  font-weight: 600;
+}
+.status-message-empty{
+  color: var(--forest-2);
+  font-style: italic;
 }
 
 /* explore / filter */
@@ -190,20 +221,27 @@ main{
 .trail-card{
   position: relative;
   display: flex;
-  gap: 12px;
+  align-items: flex-start;
+  gap: 8px;
   background: #fbf8ef;
   border: 1px solid var(--line);
   border-radius: 4px;
   padding: 12px;
-  text-decoration: none;
-  color: inherit;
   transition: transform .12s ease, box-shadow .12s ease;
 }
 .trail-card:hover{
   transform: translateY(-2px);
   box-shadow: 3px 4px 0 rgba(31,61,44,0.12);
 }
-.trail-card:focus-visible{
+.trail-card-link{
+  display: flex;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+  text-decoration: none;
+  color: inherit;
+}
+.trail-card-link:focus-visible{
   outline: 2px solid var(--blaze);
   outline-offset: 2px;
 }
@@ -239,10 +277,28 @@ main{
   color: var(--forest);
   text-transform: uppercase;
 }
+.star-btn{
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 50%;
+  background: transparent;
+}
 .star-btn svg{
-  width: 45px; 
-  height: 45px; 
-  padding-right: 15px;
+  width: 30px;
+  height: 30px;
+}
+.star-btn:focus-visible{
+  outline: 2px solid var(--blaze);
+  outline-offset: 2px;
+  background: rgba(217, 88, 31, 0.12);
+  box-shadow: 0 0 0 3px rgba(217, 88, 31, 0.18);
 }
 
 .location{

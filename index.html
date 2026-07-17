@@ -74,7 +74,9 @@
           maxlength="99"
           required
           aria-required="true"
+          aria-describedby="name-error"
         >
+        <p class="field-error" id="name-error" aria-live="polite"></p>
       </div>
 
       <div class="form-field">
@@ -87,7 +89,9 @@
           autocomplete="email"
           required
           aria-required="true"
+          aria-describedby="email-error"
         >
+        <p class="field-error" id="email-error" aria-live="polite"></p>
       </div>
 
       <div class="form-field">
@@ -97,9 +101,11 @@
           name="trail"
           required
           aria-required="true"
+          aria-describedby="trail-error"
         >
           <!-- Dynamically loaded -->
         </select>
+        <p class="field-error" id="trail-error" aria-live="polite"></p>
       </div>
 
       <div class="form-field">
@@ -109,7 +115,9 @@
           name="notes"
           placeholder="Starting time, group size, gear notes…"
           maxlength="499"
+          aria-describedby="notes-error"
         ></textarea>
+        <p class="field-error" id="notes-error" aria-live="polite"></p>
       </div>
 
       <button type="submit" class="btn-blaze">

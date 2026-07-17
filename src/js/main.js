@@ -30,26 +30,63 @@ document.addEventListener('DOMContentLoaded', async () => {
   const trailSelectDropdown = document.getElementById('trail');
   const filterDropdown = document.getElementById('filter-trails');
 
-  if (trailListContainer) {
-    trailListContainer.innerHTML = '<p class="status-message">Loading trails…</p>';
+  function renderStatus(message, isError = false) {
+    if (!trailListContainer) return;
+
+    trailListContainer.innerHTML = `
+      <p class="status-message ${isError ? 'status-message-error' : ''}" role="status">${message}</p>
+    `;
   }
+
+  function renderTrailResults(trails) {
+    if (!trailListContainer) return;
+
+    if (!trails.length) {
+      trailListContainer.innerHTML = `
+        <p class="status-message status-message-empty" role="status">No trails match this filter right now.</p>
+      `;
+      return;
+    }
+
+    renderTrails(trails, trailListContainer);
+  }
+
+  function setTrailControlsEnabled(isEnabled) {
+    if (filterDropdown) {
+      filterDropdown.disabled = !isEnabled;
+    }
+
+    if (trailSelectDropdown) {
+      trailSelectDropdown.disabled = !isEnabled;
+    }
+  }
+
+  renderStatus('Loading trails…');
+  setTrailControlsEnabled(false);
 
   try {
     trailData = await getTrails();
 
     if (trailData.length > 0) {
-      renderTrails(trailData, trailListContainer);
+      renderTrailResults(filterTrails(trailData, currentFilter));
       renderDropdown(trailData, trailSelectDropdown);
-    } else if (trailListContainer) {
-      trailListContainer.innerHTML =
-        '<p class="status-message">Sorry, we could not load the trails at this time.</p>';
+      setTrailControlsEnabled(true);
+    } else {
+      trailData = [];
+      renderStatus('No trails are available right now.');
+      if (trailSelectDropdown) {
+        trailSelectDropdown.innerHTML = '<option value="" selected disabled>Select a trail…</option>';
+      }
+      setTrailControlsEnabled(false);
     }
   } catch (error) {
     console.error('Error loading trails:', error);
-    if (trailListContainer) {
-      trailListContainer.innerHTML =
-        '<p class="status-message">We could not load trail data right now. Please try again later.</p>';
+    trailData = [];
+    renderStatus('We could not load trail data right now. Please try again later.', true);
+    if (trailSelectDropdown) {
+      trailSelectDropdown.innerHTML = '<option value="" selected disabled>Select a trail…</option>';
     }
+    setTrailControlsEnabled(false);
   }
 
   if (filterDropdown) {
@@ -61,10 +98,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         currentFilter
       );
 
-      renderTrails(
-        filteredTrails,
-        trailListContainer
-      );
+      renderTrailResults(filteredTrails);
     });
   }
 });
@@ -103,9 +137,8 @@ document.addEventListener('click', async event => {
   const trailListContainer = document.querySelector('.trail-list');
 
   if (currentFilter === "favorites") {
-    renderTrails(
-      filterTrails(trailData, currentFilter),
-      trailListContainer
+    renderTrailResults(
+      filterTrails(trailData, currentFilter)
     );
   }
 });
@@ -123,21 +156,106 @@ if (form) {
   errorBox.hidden = true;
   form.insertBefore(errorBox, form.firstElementChild);
 
-  form.addEventListener("submit", function (event) {
-    const name = document.querySelector("#name").value.trim();
-    const email = document.querySelector("#email").value.trim();
-    const notes = document.querySelector("#notes").value.trim();
+  const successBox = document.createElement('div');
+  successBox.className = 'form-success';
+  successBox.setAttribute('role', 'status');
+  successBox.setAttribute('aria-live', 'polite');
+  successBox.hidden = true;
+  form.insertBefore(successBox, form.firstElementChild);
 
-    const validation = validateHikePlan({ name, email, notes });
+  const nameInput = document.getElementById('name');
+  const emailInput = document.getElementById('email');
+  const trailInput = document.getElementById('trail');
+  const notesInput = document.getElementById('notes');
+  const nameError = document.getElementById('name-error');
+  const emailError = document.getElementById('email-error');
+  const trailError = document.getElementById('trail-error');
+  const notesError = document.getElementById('notes-error');
+
+  function clearFieldErrors() {
+    [nameInput, emailInput, trailInput, notesInput].forEach(input => {
+      input?.setAttribute('aria-invalid', 'false');
+    });
+
+    [nameError, emailError, trailError, notesError].forEach(error => {
+      if (error) error.textContent = '';
+    });
+  }
+
+  function showFieldError(input, errorElement, message) {
+    if (input) input.setAttribute('aria-invalid', 'true');
+    if (errorElement) errorElement.textContent = message;
+  }
+
+  function clearSuccessState() {
+    successBox.hidden = true;
+    successBox.textContent = '';
+  }
+
+  function focusFirstInvalidField(fields) {
+    const fieldOrder = [
+      { input: nameInput, field: 'name' },
+      { input: emailInput, field: 'email' },
+      { input: trailInput, field: 'trail' },
+      { input: notesInput, field: 'notes' }
+    ];
+
+    const firstInvalid = fieldOrder.find(({ field }) => fields.includes(field));
+
+    if (firstInvalid?.input) {
+      firstInvalid.input.focus();
+      firstInvalid.input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+
+  [nameInput, emailInput, trailInput, notesInput].forEach(input => {
+    if (!input) return;
+
+    const resetFeedback = () => {
+      clearFieldErrors();
+      clearSuccessState();
+    };
+
+    input.addEventListener('input', resetFeedback);
+    input.addEventListener('change', resetFeedback);
+  });
+
+  form.addEventListener("submit", function (event) {
+    const name = nameInput.value.trim();
+    const email = emailInput.value.trim();
+    const trail = trailInput.value.trim();
+    const notes = notesInput.value.trim();
+
+    clearFieldErrors();
+
+    const validation = validateHikePlan({ name, email, notes, trail });
 
     if (!validation.isValid) {
       event.preventDefault();
-      errorBox.innerHTML = validation.errors.map(message => `<p>${message}</p>`).join('');
+      clearSuccessState();
+
+      validation.errors.forEach(({ field, message }) => {
+        if (field === 'name') {
+          showFieldError(nameInput, nameError, message);
+        } else if (field === 'email') {
+          showFieldError(emailInput, emailError, message);
+        } else if (field === 'trail') {
+          showFieldError(trailInput, trailError, message);
+        } else if (field === 'notes') {
+          showFieldError(notesInput, notesError, message);
+        }
+      });
+
+      errorBox.innerHTML = validation.errors.map(({ message }) => `<p>${message}</p>`).join('');
       errorBox.hidden = false;
+      focusFirstInvalidField(validation.errors.map(({ field }) => field));
       return;
     }
 
     errorBox.hidden = true;
     errorBox.innerHTML = '';
+
+    successBox.hidden = false;
+    successBox.textContent = 'Your hike plan looks good. Thanks for sharing it!';
   });
 }

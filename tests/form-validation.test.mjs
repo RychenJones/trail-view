@@ -6,6 +6,7 @@ test('accepts a valid hike plan', () => {
   const result = validateHikePlan({
     name: 'Jordan Rivers',
     email: 'jordan@example.com',
+    trail: '1',
     notes: 'Meet at sunrise'
   });
 
@@ -17,6 +18,7 @@ test('rejects invalid values with clear messages', () => {
   const result = validateHikePlan({
     name: 'x'.repeat(101),
     email: 'invalid',
+    trail: '',
     notes: 'x'.repeat(501)
   });
 
@@ -24,6 +26,7 @@ test('rejects invalid values with clear messages', () => {
   assert.deepEqual(result.errors, [
     'Name must be less than 100 characters.',
     'Please enter a valid email address.',
+    'Please select a trail.',
     'Notes must be less than 500 characters.'
   ]);
 });

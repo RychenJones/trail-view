@@ -6,7 +6,8 @@
     "distance": 3.7,
     "difficulty": "Moderate",
     "description": "A popular trail with great views of the city.",
-    "image": "../images/tablerock.jpg"
+    "image": "../images/tablerock.jpg",
+    "alt": "Image of the top of the Table Rock trail"
   },
   {
     "id": "trail02",
@@ -15,6 +16,7 @@
     "distance": 11.2,
     "difficulty": "Hard",
     "description": "A stunning alpine hike in the Sawtooth Wilderness leading to a pristine lake.",
-    "image": "../images/alicelake.jpg"
+    "image": "../images/alicelake.jpg",
+    "alt": "Image of the Alice Lake"
   }
 ]

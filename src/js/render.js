@@ -8,30 +8,51 @@ export function renderTrails(trails, container) {
 
   trails.forEach(trail => {
     const diffClass = trail.difficulty.toLowerCase();
-    
     const cardHTML = `
-      <a class="trail-card" href="/detailed-view.html?id=${encodeURIComponent(trail.id)}" title="${trail.description}">
+      <a class="trail-card"
+        href="/detailed-view.html?id=${encodeURIComponent(trail.id)}"
+        title="${trail.description}"
+        aria-label="View details for ${trail.name}">
         <div class="trail-thumbnail">
-          <img src="${trail.image}" alt="${trail.name}">
+          <img src="${trail.image}" alt="${trail.alt}">
         </div>
         <div class="trail-info">
           <div class="trail-card-header">
             <h3>${trail.name}</h3>
-            <button type="button" class="star-btn ${isFavorite(trail.id) ? 'is-fav' : ''}" aria-label="Add to favorites" data-id="${trail.id}">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01z"/></svg>
+            <button
+              type="button"
+              class="star-btn ${isFavorite(trail.id) ? 'is-fav' : ''}"
+              aria-label="${isFavorite(trail.id) ? 'Remove from favorites' : 'Add to favorites'}"
+              aria-pressed="${isFavorite(trail.id)}"
+              data-id="${trail.id}">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01z"/>
+              </svg>
             </button>
           </div>
+
           <div class="location">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-11a7 7 0 1114 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
+              <path d="M12 21s-7-6.2-7-11a7 7 0 1114 0c0 4.8-7 11-7 11z"/>
+              <circle cx="12" cy="10" r="2.5"/>
+            </svg>
             ${trail.location}
           </div>
-          <div class="trail-meta">
-            <span class="trail-difficulty"><span class="difficulty-dot ${diffClass}"></span>${trail.difficulty}</span>
+
+          <div class="trail-meta" aria-label="Trail information">
+            <span class="trail-difficulty">
+              <span class="difficulty-dot ${diffClass}" aria-hidden="true"></span>
+              ${trail.difficulty}
+            </span>
             <span class="trail-distance">${trail.distance} mi</span>
           </div>
         </div>
       </a>
     `;
+
+
+
+
     container.insertAdjacentHTML('beforeend', cardHTML);
   });
 }
@@ -60,22 +81,27 @@ export function renderDetailedView(trail, trailSummary, photoFrame, card) {
   trailSummary.innerHTML = `
     <div class="title-row">
       <h1>${trail.name}</h1>
-      <button type="button" class="star-btn ${isFavorite(trail.id) ? 'is-fav' : ''}" aria-label="Add to favorites" data-id="${trail.id}">
-        <svg viewBox="0 0 24 24" fill="currentColor">
+      <button
+        type="button"
+        class="star-btn ${isFavorite(trail.id) ? 'is-fav' : ''}"
+        aria-label="${isFavorite(trail.id) ? 'Remove from favorites' : 'Add to favorites'}"
+        aria-pressed="${isFavorite(trail.id)}"
+        data-id="${trail.id}">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01z"/>
         </svg>
       </button>
     </div>
 
     <div class="location">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
         <path d="M12 21s-7-6.2-7-11a7 7 0 1114 0c0 4.8-7 11-7 11z"/>
         <circle cx="12" cy="10" r="2.5"/>
       </svg>
       ${trail.location}
     </div>
 
-    <div class="stat-strip">
+    <div class="stat-strip" aria-label="Trail statistics">
       <div class="stat">
         <span class="label">Distance</span>
         <span class="value trail-distance">${trail.distance} mi</span>
@@ -84,7 +110,7 @@ export function renderDetailedView(trail, trailSummary, photoFrame, card) {
       <div class="stat">
         <span class="label">Difficulty</span>
         <span class="value">
-          <span class="difficulty-dot ${diffClass}"></span>
+          <span class="difficulty-dot ${diffClass}" aria-hidden="true"></span>
           ${trail.difficulty}
         </span>
       </div>
@@ -92,7 +118,13 @@ export function renderDetailedView(trail, trailSummary, photoFrame, card) {
   `;
 
   photoFrame.innerHTML = `
-    <div class="photo" style="background-image: url('${trail.image}'); background-size: cover; background-position: center;"></div>
+    <div
+      class="photo"
+      aria-hidden="true"
+      role="img"
+      aria-label="${trail.name}"
+      style="background-image: url('${trail.image}'); background-size: cover; background-position: center;">
+    </div>
   `;
 
   card.innerHTML = `

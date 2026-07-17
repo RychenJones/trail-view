@@ -11,37 +11,59 @@
 </head>
 <body>
   <header>
-    <div class="brand-mark">
-      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <div class="brand-mark" aria-label="TrailView logo">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+        focusable="false">
         <path d="M3 20l6-14 3 7 2-4 7 11z"/>
       </svg>
       TrailView
     </div>
-    <nav>
-      <a href="/index.html">Home</a>
+
+    <nav aria-label="Primary navigation">
+      <a href="/index.html" aria-current="page">Home</a>
       <a href="#">About</a>
       <a href="#">Contact</a>
     </nav>
   </header>
 
   <main>
-    <a class="back-button" href="/index.html">← Back to trails</a>
+    <a class="back-button" href="/index.html" aria-label="Go back to trails">
+      ← Back to trails
+    </a>
 
-    <div class="trail-summary">
+    <div
+      class="trail-summary"
+      aria-live="polite"
+      aria-busy="true">
       <!-- Populated dynamically -->
-
     </div>
 
-    <div class="photo-frame">
+    <div
+      class="photo-frame"
+      aria-live="polite"
+      aria-busy="true">
       <!-- Populated dynamically -->
     </div>
 
-    <div class="card">
+    <div
+      class="card"
+      aria-live="polite"
+      aria-busy="true">
       <!-- Populated dynamically -->
     </div>
   </main>
 
-  <footer>© 2026 TrailView. All rights reserved.</footer>
+  <footer>
+    © 2026 TrailView. All rights reserved.
+  </footer>
 
 </body>
 </html>

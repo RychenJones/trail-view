@@ -122,6 +122,25 @@ main{
 .btn-blaze:hover, .btn-blaze:focus-visible{ background: var(--blaze-dark); }
 .btn-blaze:focus-visible{ outline: 2px solid var(--forest); outline-offset: 2px; }
 
+/* form and status feedback */
+.form-errors{
+  margin-bottom: 14px;
+  padding: 10px 12px;
+  border: 1px solid var(--blaze);
+  border-left: 4px solid var(--blaze);
+  background: #fff3eb;
+  color: var(--forest);
+  border-radius: 3px;
+}
+.form-errors p{ margin-bottom: 4px; }
+.form-errors p:last-child{ margin-bottom: 0; }
+.status-message{
+  color: var(--forest-2);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  padding: 10px 0;
+}
+
 /* explore / filter */
 .explore-header{
   position: relative;

@@ -10,7 +10,7 @@ export function renderTrails(trails, container) {
     const diffClass = trail.difficulty.toLowerCase();
     const cardHTML = `
       <a class="trail-card"
-        href="/detailed-view.html?id=${encodeURIComponent(trail.id)}"
+        href="detailed-view.html?id=${encodeURIComponent(trail.id)}"
         title="${trail.description}"
         aria-label="View details for ${trail.name}">
         <div class="trail-thumbnail">
@@ -62,7 +62,7 @@ export function renderDropdown(trails, dropdownElement) {
   if (!dropdownElement) return;
   
   // Clear stock options, but keep the placeholder
-  dropdownElement.innerHTML = '<option>Select a trail…</option>';
+  dropdownElement.innerHTML = '<option disabled selected>Select a trail…</option>';
   
   trails.forEach(trail => {
     const optionHTML = `<option value="${trail.id}">${trail.name}</option>`;

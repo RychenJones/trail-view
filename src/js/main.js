@@ -1,6 +1,7 @@
 import { getTrails } from './data.js';
 import { renderTrails, renderDropdown } from './render.js';
 import { addFavorite, removeFavorite, isFavorite } from './favorites.js';
+import { validateHikePlan } from './form.js';
 
 let trailData = [];
 let currentFilter = "all";
@@ -29,31 +30,43 @@ document.addEventListener('DOMContentLoaded', async () => {
   const trailSelectDropdown = document.getElementById('trail');
   const filterDropdown = document.getElementById('filter-trails');
 
-  trailData = await getTrails();
-
-  if (trailData.length > 0) {
-    renderTrails(trailData, trailListContainer);
-    renderDropdown(trailData, trailSelectDropdown);
-  } else if (trailListContainer) {
-    trailListContainer.innerHTML =
-      '<p>Sorry, we could not load the trails at this time.</p>';
+  if (trailListContainer) {
+    trailListContainer.innerHTML = '<p class="status-message">Loading trails…</p>';
   }
 
+  try {
+    trailData = await getTrails();
 
-  // Filter listener
-  filterDropdown.addEventListener('change', () => {
-    currentFilter = filterDropdown.value;
+    if (trailData.length > 0) {
+      renderTrails(trailData, trailListContainer);
+      renderDropdown(trailData, trailSelectDropdown);
+    } else if (trailListContainer) {
+      trailListContainer.innerHTML =
+        '<p class="status-message">Sorry, we could not load the trails at this time.</p>';
+    }
+  } catch (error) {
+    console.error('Error loading trails:', error);
+    if (trailListContainer) {
+      trailListContainer.innerHTML =
+        '<p class="status-message">We could not load trail data right now. Please try again later.</p>';
+    }
+  }
 
-    const filteredTrails = filterTrails(
-      trailData,
-      currentFilter
-    );
+  if (filterDropdown) {
+    filterDropdown.addEventListener('change', () => {
+      currentFilter = filterDropdown.value;
 
-    renderTrails(
-      filteredTrails,
-      trailListContainer
-    );
-  });
+      const filteredTrails = filterTrails(
+        trailData,
+        currentFilter
+      );
+
+      renderTrails(
+        filteredTrails,
+        trailListContainer
+      );
+    });
+  }
 });
 
 
@@ -76,9 +89,13 @@ document.addEventListener('click', async event => {
   if (isFavorite(trailId)) {
     removeFavorite(trailId);
     starButton.classList.remove('is-fav');
+    starButton.setAttribute('aria-pressed', 'false');
+    starButton.setAttribute('aria-label', 'Add to favorites');
   } else {
     addFavorite(trail);
     starButton.classList.add('is-fav');
+    starButton.setAttribute('aria-pressed', 'true');
+    starButton.setAttribute('aria-label', 'Remove from favorites');
   }
 
 
@@ -98,32 +115,29 @@ document.addEventListener('click', async event => {
 
 const form = document.querySelector(".card");
 
-form.addEventListener("submit", function (event) {
-  const name = document.querySelector("#name").value.trim();
-  const email = document.querySelector("#email").value.trim();
-  const notes = document.querySelector("#notes").value.trim();
+if (form) {
+  const errorBox = document.createElement('div');
+  errorBox.className = 'form-errors';
+  errorBox.setAttribute('role', 'alert');
+  errorBox.setAttribute('aria-live', 'polite');
+  errorBox.hidden = true;
+  form.insertBefore(errorBox, form.firstElementChild);
 
-  const errors = [];
+  form.addEventListener("submit", function (event) {
+    const name = document.querySelector("#name").value.trim();
+    const email = document.querySelector("#email").value.trim();
+    const notes = document.querySelector("#notes").value.trim();
 
-  // Name validation
-  if (name.length >= 100) {
-    errors.push("Name must be less than 100 characters.");
-  }
+    const validation = validateHikePlan({ name, email, notes });
 
-  // Email validation
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailPattern.test(email)) {
-    errors.push("Please enter a valid email address.");
-  }
+    if (!validation.isValid) {
+      event.preventDefault();
+      errorBox.innerHTML = validation.errors.map(message => `<p>${message}</p>`).join('');
+      errorBox.hidden = false;
+      return;
+    }
 
-  // Notes validation
-  if (notes.length >= 500) {
-    errors.push("Notes must be less than 500 characters.");
-  }
-
-  // Stop submission if errors exist
-  if (errors.length > 0) {
-    event.preventDefault();
-    alert(errors.join("\n"));
-  }
-});
+    errorBox.hidden = true;
+    errorBox.innerHTML = '';
+  });
+}

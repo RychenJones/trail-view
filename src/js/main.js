@@ -25,10 +25,142 @@ function filterTrails(trails, filter) {
   }
 }
 
+function setupFilterDropdown(onSelect) {
+  const wrapper = document.getElementById('filter-dropdown');
+  const trigger = document.getElementById('filter-trigger');
+  const listbox = document.getElementById('filter-listbox');
+
+  if (!wrapper || !trigger || !listbox) return null;
+
+  const options = Array.from(listbox.querySelectorAll('[role="option"]'));
+  const label = trigger.querySelector('.filter-trigger-label');
+
+  let activeIndex = options.findIndex(opt => opt.classList.contains('is-selected'));
+  if (activeIndex === -1) activeIndex = 0;
+
+  function isOpen() {
+    return trigger.getAttribute('aria-expanded') === 'true';
+  }
+
+  function highlight(index) {
+    activeIndex = index;
+    options.forEach((opt, i) => opt.classList.toggle('is-active', i === index));
+    listbox.setAttribute('aria-activedescendant', options[index].id);
+    options[index].scrollIntoView({ block: 'nearest' });
+  }
+
+  function open() {
+    if (isOpen()) return;
+    listbox.hidden = false;
+    trigger.setAttribute('aria-expanded', 'true');
+    const selectedIndex = options.findIndex(opt => opt.classList.contains('is-selected'));
+    highlight(selectedIndex === -1 ? 0 : selectedIndex);
+    listbox.focus();
+  }
+
+  function close({ refocusTrigger = false } = {}) {
+    if (!isOpen()) return;
+    listbox.hidden = true;
+    trigger.setAttribute('aria-expanded', 'false');
+    listbox.removeAttribute('aria-activedescendant');
+    options.forEach(opt => opt.classList.remove('is-active'));
+    if (refocusTrigger) trigger.focus();
+  }
+
+  function selectOption(option) {
+    options.forEach(opt => {
+      opt.classList.remove('is-selected');
+      opt.setAttribute('aria-selected', 'false');
+    });
+    option.classList.add('is-selected');
+    option.setAttribute('aria-selected', 'true');
+
+    const value = option.dataset.value;
+    label.textContent = value === 'all' ? 'Filter' : option.textContent.trim();
+
+    onSelect(value);
+  }
+
+  trigger.addEventListener('click', () => {
+    if (isOpen()) {
+      close({ refocusTrigger: true });
+    } else {
+      open();
+    }
+  });
+
+  trigger.addEventListener('keydown', event => {
+    if (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      open();
+    }
+  });
+
+  listbox.addEventListener('keydown', event => {
+    switch (event.key) {
+      case 'ArrowDown':
+        event.preventDefault();
+        highlight((activeIndex + 1) % options.length);
+        break;
+      case 'ArrowUp':
+        event.preventDefault();
+        highlight((activeIndex - 1 + options.length) % options.length);
+        break;
+      case 'Home':
+        event.preventDefault();
+        highlight(0);
+        break;
+      case 'End':
+        event.preventDefault();
+        highlight(options.length - 1);
+        break;
+      case 'Enter':
+      case ' ':
+        event.preventDefault();
+        selectOption(options[activeIndex]);
+        close({ refocusTrigger: true });
+        break;
+      case 'Escape':
+        event.preventDefault();
+        close({ refocusTrigger: true });
+        break;
+      case 'Tab':
+        close();
+        break;
+    }
+  });
+
+  options.forEach((option, index) => {
+    option.addEventListener('click', () => {
+      highlight(index);
+      selectOption(option);
+      close({ refocusTrigger: true });
+    });
+
+    option.addEventListener('mouseenter', () => highlight(index));
+  });
+
+  document.addEventListener('click', event => {
+    if (!wrapper.contains(event.target)) {
+      close();
+    }
+  });
+
+  return {
+    setEnabled(isEnabled) {
+      trigger.disabled = !isEnabled;
+      if (!isEnabled) close();
+    }
+  };
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
   const trailListContainer = document.querySelector('.trail-list');
   const trailSelectDropdown = document.getElementById('trail');
-  const filterDropdown = document.getElementById('filter-trails');
+  const filterDropdown = setupFilterDropdown(filter => {
+    currentFilter = filter;
+    renderTrailResults(filterTrails(trailData, currentFilter));
+  });
 
   function renderStatus(message, isError = false) {
     if (!trailListContainer) return;
@@ -53,7 +185,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   function setTrailControlsEnabled(isEnabled) {
     if (filterDropdown) {
-      filterDropdown.disabled = !isEnabled;
+      filterDropdown.setEnabled(isEnabled);
     }
 
     if (trailSelectDropdown) {
@@ -89,18 +221,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     setTrailControlsEnabled(false);
   }
 
-  if (filterDropdown) {
-    filterDropdown.addEventListener('change', () => {
-      currentFilter = filterDropdown.value;
-
-      const filteredTrails = filterTrails(
-        trailData,
-        currentFilter
-      );
-
-      renderTrailResults(filteredTrails);
-    });
-  }
 });
 
 

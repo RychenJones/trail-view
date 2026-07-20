@@ -54,7 +54,7 @@
       <div class="dash-line"></div>
     </div>
 
-    <form class="card" aria-labelledby="plan-hike-title">
+    <form class="card" aria-labelledby="plan-hike-title" novalidate>
       <div class="card-title">
         <h2 id="plan-hike-title">Plan Your Hike</h2>
       </div>
@@ -72,8 +72,6 @@
           placeholder="Jordan Rivers"
           autocomplete="name"
           maxlength="99"
-          required
-          aria-required="true"
           aria-describedby="name-error"
         >
         <p class="field-error" id="name-error" aria-live="polite"></p>
@@ -87,8 +85,6 @@
           type="email"
           placeholder="jordan@example.com"
           autocomplete="email"
-          required
-          aria-required="true"
           aria-describedby="email-error"
         >
         <p class="field-error" id="email-error" aria-live="polite"></p>
@@ -99,8 +95,6 @@
         <select
           id="trail"
           name="trail"
-          required
-          aria-required="true"
           aria-describedby="trail-error"
         >
           <!-- Dynamically loaded -->
@@ -129,18 +123,38 @@
       <div class="explore-header">
         <h2 id="explore-heading">Explore</h2>
 
-        <div class="filter-select">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-            <path d="M4 6h16M7 12h10M10 18h4"/>
-          </svg>
+        <div class="filter-dropdown" id="filter-dropdown">
+          <button
+            type="button"
+            class="filter-trigger"
+            id="filter-trigger"
+            aria-haspopup="listbox"
+            aria-expanded="false"
+            aria-controls="filter-listbox"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <path d="M4 6h16M7 12h10M10 18h4"/>
+            </svg>
+            <span class="filter-trigger-label">Filter</span>
+            <svg class="filter-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <path d="M6 9l6 6 6-6"/>
+            </svg>
+          </button>
 
-          <select id="filter-trails" aria-label="Filter trails">
-            <option value="all">Filter</option>
-            <option value="favorites">Favorites</option>
-            <option value="easy">Easy</option>
-            <option value="moderate">Moderate</option>
-            <option value="hard">Hard</option>
-          </select>
+          <ul
+            class="filter-listbox"
+            id="filter-listbox"
+            role="listbox"
+            aria-label="Filter trails"
+            tabindex="-1"
+            hidden
+          >
+            <li role="option" class="is-selected" data-value="all" aria-selected="true" id="filter-opt-all">All Trails</li>
+            <li role="option" data-value="favorites" aria-selected="false" id="filter-opt-favorites">Favorites</li>
+            <li role="option" data-value="easy" aria-selected="false" id="filter-opt-easy">Easy</li>
+            <li role="option" data-value="moderate" aria-selected="false" id="filter-opt-moderate">Moderate</li>
+            <li role="option" data-value="hard" aria-selected="false" id="filter-opt-hard">Hard</li>
+          </ul>
         </div>
       </div>
 

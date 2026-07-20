@@ -52,6 +52,7 @@ header{
   letter-spacing: 0.14em;
   text-transform: uppercase;
   font-weight: 600;
+  text-decoration: none;
 }
 .brand-mark svg{ width: 18px; height: 18px; }
 

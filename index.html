@@ -14,7 +14,7 @@
 <body>
 
   <div class="topo-bg" aria-hidden="true">
-    <svg viewBox="0 0 430 340" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 430 340" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
       <path d="M-10 60 Q 100 20, 220 60 T 440 50" stroke="#1f3d2c" fill="none" stroke-width="2"/>
       <path d="M-10 100 Q 90 60, 220 100 T 440 90" stroke="#1f3d2c" fill="none" stroke-width="2"/>
       <path d="M-10 140 Q 110 100, 220 140 T 440 130" stroke="#1f3d2c" fill="none" stroke-width="2"/>
@@ -26,32 +26,35 @@
 
   <header>
     <div class="brand-mark">
-      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
         <path d="M3 20l6-14 3 7 2-4 7 11z"/>
       </svg>
       TrailView
     </div>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="#">About</a>
-      <a href="#">Contact</a>
+
+    <nav aria-label="Primary">
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="#explore">Explore</a>
+      <a href="#plan-hike-title">Plan</a>
     </nav>
   </header>
 
   <main>
 
-    <section class="hero">
-      <h1>Trail<span>View</span></h1>
+    <section class="hero" aria-labelledby="hero-title">
+      <h1 id="hero-title">Trail<span>View</span></h1>
       <p>Find it. Hike it. Log it.</p>
     </section>
 
     <div class="trail-divider" aria-hidden="true">
       <div class="dash-line"></div>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20l6-14 3 7 2-4 7 11z"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+        <path d="M3 20l6-14 3 7 2-4 7 11z"/>
+      </svg>
       <div class="dash-line"></div>
     </div>
 
-    <form class="card" aria-labelledby="plan-hike-title">
+    <form class="card" aria-labelledby="plan-hike-title" novalidate>
       <div class="card-title">
         <h2 id="plan-hike-title">Plan Your Hike</h2>
       </div>
@@ -62,48 +65,53 @@
 
       <div class="form-field">
         <label for="name">Name</label>
-        <input 
-          id="name" 
+        <input
+          id="name"
           name="name"
-          type="text" 
-          placeholder="Jordan Rivers" 
+          type="text"
+          placeholder="Jordan Rivers"
           autocomplete="name"
           maxlength="99"
-          required
+          aria-describedby="name-error"
         >
+        <p class="field-error" id="name-error" aria-live="polite"></p>
       </div>
 
       <div class="form-field">
         <label for="email">Email</label>
-        <input 
-          id="email" 
+        <input
+          id="email"
           name="email"
-          type="email" 
-          placeholder="jordan@example.com" 
+          type="email"
+          placeholder="jordan@example.com"
           autocomplete="email"
-          required
+          aria-describedby="email-error"
         >
+        <p class="field-error" id="email-error" aria-live="polite"></p>
       </div>
 
       <div class="form-field">
         <label for="trail">Trail</label>
-        <select 
+        <select
           id="trail"
           name="trail"
-          required
+          aria-describedby="trail-error"
         >
           <!-- Dynamically loaded -->
         </select>
+        <p class="field-error" id="trail-error" aria-live="polite"></p>
       </div>
 
       <div class="form-field">
         <label for="notes">Notes (optional)</label>
-        <textarea 
+        <textarea
           id="notes"
           name="notes"
           placeholder="Starting time, group size, gear notes…"
           maxlength="499"
+          aria-describedby="notes-error"
         ></textarea>
+        <p class="field-error" id="notes-error" aria-live="polite"></p>
       </div>
 
       <button type="submit" class="btn-blaze">
@@ -111,27 +119,55 @@
       </button>
     </form>
 
-    <div class="explore-header">
-      <h2>Explore</h2>
-      <div class="filter-select">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M4 6h16M7 12h10M10 18h4"/>
-        </svg>
+    <section id="explore" aria-labelledby="explore-heading">
+      <div class="explore-header">
+        <h2 id="explore-heading">Explore</h2>
 
-        <select id="filter-trails" aria-label="Filter trails">
-          <option value="all">Filter</option>
-          <option value="favorites">Favorites</option>
-          <option value="easy">Easy</option>
-          <option value="moderate">Moderate</option>
-          <option value="hard">Hard</option>
-        </select>
+        <div class="filter-dropdown" id="filter-dropdown">
+          <button
+            type="button"
+            class="filter-trigger"
+            id="filter-trigger"
+            aria-haspopup="listbox"
+            aria-expanded="false"
+            aria-controls="filter-listbox"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <path d="M4 6h16M7 12h10M10 18h4"/>
+            </svg>
+            <span class="filter-trigger-label">Filter</span>
+            <svg class="filter-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <path d="M6 9l6 6 6-6"/>
+            </svg>
+          </button>
+
+          <ul
+            class="filter-listbox"
+            id="filter-listbox"
+            role="listbox"
+            aria-label="Filter trails"
+            tabindex="-1"
+            hidden
+          >
+            <li role="option" class="is-selected" data-value="all" aria-selected="true" id="filter-opt-all">All Trails</li>
+            <li role="option" data-value="favorites" aria-selected="false" id="filter-opt-favorites">Favorites</li>
+            <li role="option" data-value="easy" aria-selected="false" id="filter-opt-easy">Easy</li>
+            <li role="option" data-value="moderate" aria-selected="false" id="filter-opt-moderate">Moderate</li>
+            <li role="option" data-value="hard" aria-selected="false" id="filter-opt-hard">Hard</li>
+          </ul>
+        </div>
       </div>
-    </div>
 
-    <div class="trail-list">
-      <p id="placeholder-text">No trails to show at this time.</p>
-      <!-- Dynamically loaded -->
-    </div>
+      <div
+        class="trail-list"
+        aria-live="polite"
+        aria-atomic="true"
+        aria-label="Trail results"
+      >
+        <p id="placeholder-text">No trails to show at this time.</p>
+        <!-- Dynamically loaded -->
+      </div>
+    </section>
 
   </main>
 
